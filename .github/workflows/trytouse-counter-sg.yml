@@ -1,0 +1,24 @@
+name: Deploy Application
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: # Permette di lanciarlo anche a mano
+
+jobs:
+  # STEP 1: Richiama il Security Gate (Job dipendente)
+  check-security-gate:
+    # Qui devi inserire il percorso esatto del file YAML che contiene la tua action di controllo
+    uses: n-amico-test/pagopa/.github/workflows/counter-sg.yml@latest
+    # Se il tuo workflow riutilizzabile ha bisogno del token, puoi passarlo così
+    secrets: inherit
+
+  # STEP 2: Esegui il rilascio
+  release-app:
+    needs: check-security-gate 
+    runs-on: ubuntu-latest
+    steps:
+      - name: Esecuzione rilascio
+        run: |
+          echo "Rilascio avvenuto con successo!"
