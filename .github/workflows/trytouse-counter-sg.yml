@@ -10,7 +10,7 @@ jobs:
   # STEP 1: Richiama il Security Gate (Job dipendente)
   check-security-gate:
     # Qui devi inserire il percorso esatto del file YAML che contiene la tua action di controllo
-    uses: n-amico-test/vulnerable-to-gradle/.github/workflows/counter-sg.yml@b653ae55c073c7f260fc297415175f20e48246ec
+    uses: n-amico-test/vulnerable-to-gradle/.github/workflows/counter-sg.yml@d0526cf304aa6dc421d4b829f80d823fffde841d
     # Se il tuo workflow riutilizzabile ha bisogno del token, puoi passarlo così
     secrets: inherit
     with:
