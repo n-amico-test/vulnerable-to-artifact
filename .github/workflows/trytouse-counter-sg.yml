@@ -13,6 +13,8 @@ jobs:
     uses: n-amico-test/vulnerable-to-gradle/.github/workflows/counter-sg.yml@b653ae55c073c7f260fc297415175f20e48246ec
     # Se il tuo workflow riutilizzabile ha bisogno del token, puoi passarlo così
     secrets: inherit
+    with:
+      force_release: true
 
   # STEP 2: Esegui il rilascio
   release-app:
