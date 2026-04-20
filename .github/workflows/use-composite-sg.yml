@@ -1,0 +1,33 @@
+name: Test Security Gate
+
+# This 'on' block is required so GitHub knows it's a workflow
+on:
+  workflow_dispatch:
+    inputs:
+      bypass_security_checks_manual:
+        description: 'Bypass security checks'
+        type: boolean
+        default: false
+
+jobs:
+  security-gate:
+    runs-on: ubuntu-latest
+    # Explicitly grant permissions for the 'gh pr list' command to work
+    permissions:
+      contents: read
+      pull-requests: read 
+    steps:
+      # Step A: Pull your private code into the runner
+      - name: Checkout Security Gate Action
+        uses: actions/checkout@v4
+        with:
+          repository: n-amico-test/vulnerable-to-gradle
+          ref: main 
+          token: ${{ secrets.PRODSEC_GATES_READ_TOKEN }} # Ensure this matches your Repo Secret name exactly
+          path: ./.github/actions/security-gate
+
+      # Step B: Run the downloaded action locally
+      - name: Run Security Gate
+        uses: ./.github/actions/security-gate
+        with:
+          force_release: ${{ inputs.bypass_security_checks_manual == true || vars.BYPASS_SECURITY_CHECKS == 'true' }}
