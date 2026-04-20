@@ -1,3 +1,5 @@
+name: Use composite
+
 jobs:
   security-gate:
     runs-on: ubuntu-latest
